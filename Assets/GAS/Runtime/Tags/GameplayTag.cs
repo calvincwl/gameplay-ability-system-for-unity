@@ -25,15 +25,13 @@ namespace GAS.Runtime
 
             _ancestorNames = new string[tags.Length - 1];
             _ancestorHashCodes = new int[tags.Length - 1];
-            var i = 0;
             var ancestorTag = "";
-            while (i < tags.Length - 1)
+            for (var i = 0; i < tags.Length - 1; i++)
             {
                 ancestorTag += tags[i];
                 _ancestorHashCodes[i] = ancestorTag.GetHashCode();
                 _ancestorNames[i] = ancestorTag;
                 ancestorTag += ".";
-                i++;
             }
 
             _shortName = tags.Last();
@@ -62,7 +60,9 @@ namespace GAS.Runtime
 
         public bool IsDescendantOf(GameplayTag other)
         {
-            return other._ancestorHashCodes.Contains(HashCode);
+            // 感觉这里对接口的解释是反的？
+            // return other._ancestorHashCodes.Contains(HashCode);
+            return _ancestorHashCodes.Contains(other.HashCode);
         }
 
         public override bool Equals(object obj)
