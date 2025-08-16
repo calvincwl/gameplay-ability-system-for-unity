@@ -12,7 +12,6 @@ namespace GAS.Editor
     {
         private const int LABEL_WIDTH = 200;
         private const int SHORT_LABEL_WIDTH = 200;
-        private static GASSettingAsset _setting;
 
 
         [Title(GASTextDefine.TITLE_SETTING, Bold = true)]
@@ -30,14 +29,16 @@ namespace GAS.Editor
         [OnValueChanged("SaveAsset")]
         public string GASConfigAssetPath = "Assets/GAS/Config";
 
-        public static GASSettingAsset Setting
-        {
-            get
-            {
-                if (_setting == null) _setting = LoadOrCreate();
-                return _setting;
-            }
-        }
+        // 明明写了单例不知这里为何还要自己另外保存一份，但是和基类的逻辑又有冲突
+        // public static GASSettingAsset Setting
+        // {
+        //     get
+        //     {
+        //         if (_setting == null) _setting = LoadOrCreate();
+        //         return _setting;
+        //     }
+        // }
+        public static GASSettingAsset Setting => Instance;
 
         [ShowInInspector]
         [BoxGroup("V", false, order: 0)]
