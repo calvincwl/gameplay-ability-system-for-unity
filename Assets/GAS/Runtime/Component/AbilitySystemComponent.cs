@@ -102,9 +102,7 @@ namespace GAS.Runtime
                 var ability = Activator.CreateInstance(info.AbilityType(), args: info) as AbstractAbility;
                 AbilityContainer.GrantAbility(ability);
             }
-#pragma warning disable CS0168 // 声明了变量，但从未使用过
-            catch (MissingMethodException e)
-#pragma warning restore CS0168 // 声明了变量，但从未使用过
+            catch (MissingMethodException)
             {
                 // 踩坑日志:
                 //   复制了某个AbilityAsset实现类的代码，但忘记更新AbilityType()方法的返回值。
@@ -284,7 +282,7 @@ namespace GAS.Runtime
             {
                 var attributeValue = GetAttributeAttributeValue(modifier.AttributeSetName, modifier.AttributeShortName);
                 if (attributeValue == null) continue;
-                if (attributeValue.Value.IsSupportOperation(modifier.Operation) == false)
+                if (!attributeValue.Value.IsSupportOperation(modifier.Operation))
                 {
                     throw new InvalidOperationException("Unsupported operation.");
                 }
@@ -335,15 +333,6 @@ namespace GAS.Runtime
             return attrSet;
         }
 
-        public void ClearGameplayEffect()
-        {
-            // _abilityContainer = new AbilityContainer(this);
-            // GameplayEffectContainer = new GameplayEffectContainer(this);
-            // _attributeSetContainer = new AttributeSetContainer(this);
-            // tagAggregator = new GameplayTagAggregator(this);
-            GameplayEffectContainer.ClearGameplayEffect();
-        }
-
         private GameplayEffectSpec AddGameplayEffect(AbilitySystemComponent source, GameplayEffectSpec effectSpec)
         {
             return GameplayEffectContainer.AddGameplayEffectSpec(source, effectSpec);
@@ -360,7 +349,7 @@ namespace GAS.Runtime
             AbilityContainer.CancelAllAbilities();
         }
 
-        private void ClearGameplayEffects()
+        public void ClearGameplayEffects()
         {
             GameplayEffectContainer.ClearGameplayEffect();
         }

@@ -7,9 +7,9 @@ namespace GAS.Runtime
 {
     public class GameplayEffectSpec
     {
-        private Dictionary<GameplayTag, float> _valueMapWithTag = new Dictionary<GameplayTag, float>();
-        private Dictionary<string, float> _valueMapWithName = new Dictionary<string, float>();
-        private List<GameplayCueDurationalSpec> _cueDurationalSpecs = new List<GameplayCueDurationalSpec>();
+        private readonly Dictionary<GameplayTag, float> _valueMapWithTag = new();
+        private readonly Dictionary<string, float> _valueMapWithName = new();
+        private readonly List<GameplayCueDurationalSpec> _cueDurationalSpecs = new();
 
         /// <summary>
         /// The execution type of onImmunity is one shot.
@@ -200,7 +200,7 @@ namespace GAS.Runtime
             {
                 foreach (var cue in _cueDurationalSpecs) cue.OnRemove();
 
-                _cueDurationalSpecs = null;
+                _cueDurationalSpecs.Clear();
             }
         }
 

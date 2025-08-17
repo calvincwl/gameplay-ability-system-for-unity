@@ -68,7 +68,7 @@ namespace GAS
             GasHost.enabled = false;
         }
 
-        public void Unpause()
+        public void Resume()
         {
             GasHost.enabled = true;
         }

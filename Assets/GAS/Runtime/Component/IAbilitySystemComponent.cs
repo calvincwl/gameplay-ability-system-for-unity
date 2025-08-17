@@ -49,6 +49,6 @@ namespace GAS.Runtime
         
         T AttrSet<T>() where T : AttributeSet;
 
-        void ClearGameplayEffect();
+        void ClearGameplayEffects();
     }
 }
