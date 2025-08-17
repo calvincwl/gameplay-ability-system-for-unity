@@ -1,0 +1,60 @@
+using UnityEngine;
+
+public class Enemy : MonoBehaviour
+{
+    private const float BoomDistance = 2.5f;
+    private Player _player;
+    private Rigidbody _rb;
+
+    private void Awake()
+    {
+        _rb = gameObject.GetComponent<Rigidbody>();
+        GameRunner.Instance.RegisterEnemy(this);
+    }
+
+    private void OnDestroy()
+    {
+        GameRunner.Instance.UnregisterEnemy(this);
+    }
+    
+    private void Update()
+    {
+        if (Chase()) Boom();
+        
+        if (_player != null)
+        {
+            var dir = (Vector2)(_player.transform.position - transform.position);
+            dir.Normalize();
+            transform.up = dir;
+        }
+    }
+
+    public void Init(Player player)
+    {
+        _player = player;
+    }
+
+    private bool Chase()
+    {
+        if (_player == null)
+        {
+            _rb.velocity =Vector2.zero;
+            return false;
+        }
+        
+        var delta = (Vector2)(_player.transform.position - transform.position);
+        _rb.velocity = delta.normalized * 5.0f;
+        
+        var distance = delta.magnitude;
+        return distance < BoomDistance;
+    }
+
+    private void Boom()
+    {
+    }
+
+    private void Die()
+    {
+        GameRunner.Instance.AddScore();
+    }
+}
