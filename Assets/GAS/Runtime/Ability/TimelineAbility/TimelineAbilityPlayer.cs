@@ -297,7 +297,7 @@ namespace GAS.Runtime
                     var catcher = mark.TargetCatcher;
                     catcher.Init(_abilitySpec.Owner);
 
-                    catcher.CatchTargetsNonAllocSafe(_abilitySpec.Target, _targets);
+                    catcher.CatchTargets(_abilitySpec.Target, _targets);
 
                     foreach (var asc in _targets)
                     {
